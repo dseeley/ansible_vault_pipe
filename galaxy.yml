@@ -1,0 +1,32 @@
+namespace: dseeley
+
+name: ansible_vault_pipe
+
+version: AUTOFILLED_BY_JENKINS
+
+readme: README.md
+
+authors:
+- Dougal Seeley <github@dougalseeley.com>
+
+description: An Ansible action plugin to perform ansible-vault encrypt/decrypt operations inside a playbook.  Can use either user-provided id/pass, or can use already-loaded vault secrets.
+
+#license:
+#- BSD-3-Clause
+
+license_file: 'LICENSE'
+
+tags: ['cloud', 'security', 'system']
+
+dependencies: {}
+
+repository: https://github.com/dseeley/ansible_vault_pipe
+
+documentation: https://github.com/dseeley/ansible_vault_pipe/blob/master/README.md
+
+homepage: https://github.com/dseeley/ansible_vault_pipe
+
+issues: https://github.com/dseeley/ansible_vault_pipe/issues
+
+build_ignore: [ '.idea', '.gitignore' ]
+
