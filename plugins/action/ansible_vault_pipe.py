@@ -12,8 +12,16 @@ from ansible.utils.display import Display
 
 display = Display()
 
+
 #################################
-# An action plugin to perform vault encrypt/decrypt operations inside a playbook.  Can use either user-provided id/pass, or can use already-loaded vault secrets.
+# An action plugin to perform vault encrypt/decrypt operations inside a playbook.  Can use either user-provided id/pass, or will otherwise try to use already-loaded vault secrets.
+# parameters:
+#   action: [encrypt|decrypt]
+#   vaultid: The vault-id if this is (or will be) associated with one. (optional)
+#   vaultpass: The vault password (the current password for action: decrypt, the desired for action: encrypt).  If this is not provided, will attempt to use the already-loaded secrets (command-line or vault script).
+#   vaulttext: (decrypt-only) - the vault text to be decrypted
+#   plaintext: (encrypt-only) - the plain text to be encrypted
+#   multiline_out: (encrypt-only) - whether to break the encrypted ciphertext into 80-character lines (as ansible-vault encrypt does).  Default: no
 #################################
 #
 # - name: Encrypt using user-provided vaultid and vaultpass
@@ -37,6 +45,7 @@ display = Display()
 # - name: Encrypt using already-loaded vault secrets (from command-line, ansible.cfg etc)
 #   ansible_vault_pipe:
 #     action: encrypt
+#     multiline_out: yes
 #     plaintext: "sometext"
 #   register: r__ansible_vault_encrypt
 # - debug: msg={{r__ansible_vault_encrypt}}
@@ -81,8 +90,14 @@ class ActionModule(ActionBase):
             b_vaulttext = oVaultLib.encrypt(self._task.args["plaintext"])
             b_ciphertext, b_version, cipher_name, vault_id = parse_vaulttext_envelope(b_vaulttext)
 
-            vaulttext_header = b_vaulttext.decode('utf-8').split('\n',1)[0]
-            result['vaulttext'] = vaulttext_header + "\n" + b_ciphertext.decode('utf-8')
+            vaulttext_header = b_vaulttext.decode('utf-8').split('\n', 1)[0]
+            ciphertext = b_ciphertext.decode('utf-8')
+
+            if 'multiline_out' in self._task.args and self._task.args["multiline_out"] == True:
+                multiline_length = 80
+                ciphertext = '\n'.join([ciphertext[i:i + multiline_length] for i in range(0, len(ciphertext), multiline_length)])
+
+            result['vaulttext'] = vaulttext_header + "\n" + ciphertext
             result['plaintext'] = self._task.args["plaintext"]
 
         else:
