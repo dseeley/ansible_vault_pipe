@@ -1,7 +1,7 @@
 #!groovy
 
 node {
-    stage('Call ansible_vault_pipe/ansible_vault_pipe-release-tag') {
-        build job: 'ansible_vault_pipe/ansible_vault_pipe-release-tag', parameters: [string(name: 'NEW_VERSION', value: "next")]
+    stage('Call ansible/ansible_vault_pipe-release-tag') {
+        build job: 'ansible/ansible_vault_pipe-release-tag', parameters: [string(name: 'NEW_VERSION', value: "next")]
     }
 }
