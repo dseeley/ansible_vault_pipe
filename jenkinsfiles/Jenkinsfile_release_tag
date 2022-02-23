@@ -7,7 +7,7 @@ def PROJECT_BRANCH_DEFAULT = "master"       //Set the default git branch to use 
 //This allows us to create our own Docker image for this specific use-case.  Once it is built, it will not be rebuilt, so only adds delay the first time we use it.
 def create_custom_image(image_name, params = "") {
     // Create a lock to prevent building the same image in parallel
-    lock('IMAGEBUILDLOCK__' + env.NODE_NAME) {
+    lock('IMAGEBUILDLOCK__' + image_name + '__' + env.NODE_NAME) {
         def jenkins_username = sh(script: 'whoami', returnStdout: true).trim()
         def jenkins_uid = sh(script: "id -u  ${jenkins_username}", returnStdout: true).trim()
         def jenkins_gid = sh(script: "id -g  ${jenkins_username}", returnStdout: true).trim()
@@ -69,7 +69,7 @@ node {
         }
 
         /*** Create a custom docker image within this Jenkinsfile ***/
-        create_custom_image("ubuntu_ansible", "").inside("--init ${docker_parent_net_str}") {
+        create_custom_image("ansible_vault_pipe", "").inside("--init ${docker_parent_net_str}") {
             def new_tag_version = params.NEW_VERSION
             stage('Create new version') {
                 withCredentials([usernamePassword(credentialsId: params.GIT_CREDS, usernameVariable: 'GIT_USER', passwordVariable: 'GIT_PASS')]) {
