@@ -21,7 +21,7 @@ display = Display()
 #   vaultpass: The vault password (the current password for action: decrypt, the desired for action: encrypt).  If this is not provided, will attempt to use the already-loaded secrets (command-line or vault script).
 #   vaulttext: (decrypt-only) - the vault text to be decrypted
 #   plaintext: (encrypt-only) - the plain text to be encrypted
-#   multiline_out: (encrypt-only) - whether to break the encrypted ciphertext into 80-character lines (as ansible-vault encrypt does).  Default: no
+#   multiline_out: (encrypt-only) - whether to break the encrypted ciphertext into 80-character lines (as ansible-vault encrypt does).  Default: false
 #################################
 #
 # - name: Encrypt using user-provided vaultid and vaultpass
@@ -45,7 +45,7 @@ display = Display()
 # - name: Encrypt using already-loaded vault secrets (from command-line, ansible.cfg etc)
 #   ansible_vault_pipe:
 #     action: encrypt
-#     multiline_out: yes
+#     multiline_out: true
 #     plaintext: "sometext"
 #   register: r__ansible_vault_encrypt
 # - debug: msg={{r__ansible_vault_encrypt}}

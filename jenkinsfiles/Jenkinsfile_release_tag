@@ -5,7 +5,7 @@ def PROJECT_URL_DEFAULT = "https://github.com/dseeley/ansible_vault_pipe"
 def PROJECT_BRANCH_DEFAULT = "master"       //Set the default git branch to use if we're not running an SCM job (e.g. if we're copying/pasting into a pipeline script)
 
 def pypi_ansible = ["curl", "-s", "-H", "Accept: application/json", "-H", "Content-type: application/json", "GET", "https://pypi.org/pypi/ansible/json"].execute().text
-def pypi_ansible_latest = new groovy.json.JsonSlurper().parseText(pypi_ansible).releases.keySet()[-1]
+def pypi_ansible_latest = new groovy.json.JsonSlurper().parseText(pypi_ansible).info.version        // Use `info.version` instead of `.releases.keySet()[-1]`, to avoid alpha and release candidate versions
 
 //This allows us to create our own Docker image for this specific use-case.  Once it is built, it will not be rebuilt, so only adds delay the first time we use it.
 def create_custom_image(image_name, build_opts = "") {

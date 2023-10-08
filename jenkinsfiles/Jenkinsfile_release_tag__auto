@@ -1,7 +1,7 @@
 #!groovy
 
 def pypi_ansible = ["curl", "-s", "-H", "Accept: application/json", "-H", "Content-type: application/json", "GET", "https://pypi.org/pypi/ansible/json"].execute().text
-def pypi_ansible_latest = new groovy.json.JsonSlurper().parseText(pypi_ansible).releases.keySet()[-1]
+def pypi_ansible_latest = new groovy.json.JsonSlurper().parseText(pypi_ansible).info.version        // Use `info.version` instead of `.releases.keySet()[-1]`, to avoid alpha and release candidate versions
 
 node {
     stage('Call ansible/ansible_vault_pipe-release-tag') {
