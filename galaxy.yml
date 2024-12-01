@@ -28,5 +28,5 @@ homepage: https://github.com/dseeley/ansible_vault_pipe
 
 issues: https://github.com/dseeley/ansible_vault_pipe/issues
 
-build_ignore: [ '.idea', '.gitignore', 'Dockerfile*' ]
+build_ignore: [ '.idea', 'jenkinsfiles', '.gitignore', 'Dockerfile*' ]
 
