@@ -1,6 +1,6 @@
 namespace: dseeley
 name: ansible_vault_pipe
-version: 0.0.0       # This is automatically filled by Jenkins on galaxy release with the current git release tag number.
+version: 0.0.0       # This is automatically filled by CI/CD on galaxy release, with the current git release tag number.
 readme: README.md
 authors:
   - Dougal Seeley (@dseeley)

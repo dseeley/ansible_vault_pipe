@@ -1,6 +1,6 @@
 # Ansible Collection - dseeley.ansible_vault_pipe
 
-An Ansible collection providing both an **action plugin** and an **action plugin** to perform vault encrypt/decrypt operations inside a playbook. Can use either user-provided id/pass, or can use already-loaded vault secrets.
+An Ansible collection providing both an **action plugin** and a **lookup plugin** to perform vault encrypt/decrypt operations inside a playbook. Can use either user-provided id/pass, or can use already-loaded vault secrets.
 
 ## Installation
 
